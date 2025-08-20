@@ -11,6 +11,7 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.filters import Command
 from aiogram.exceptions import TelegramBadRequest
+from bs4 import BeautifulSoup
 
 from telegram_bot_service.config import TELEGRAM_TOKEN
 from telegram_bot_service.services.api_client import search_jobs, get_job_detail
@@ -24,7 +25,6 @@ dp = Dispatcher()
 PAGE_SIZE = 10
 
 def format_job_message(job: Dict) -> str:
-
     posted_at_str = job.get("posted_at", "")
     if posted_at_str:
         try:
@@ -36,18 +36,22 @@ def format_job_message(job: Dict) -> str:
     else:
         posted_at = "Unknown"
 
+    # Clean description
     description = job.get("description", "No description")
+    description = BeautifulSoup(description, "html.parser").get_text()
     description = description.replace("\\n", "\n").strip()
 
-    apply_url = job.get("apply_url") or job.get("url") or ""
+    apply_url = job.get("apply_url") or job.get("url") or None
+    apply_text = f"\n\n👉 <a href='{apply_url}'>Apply here</a>" if apply_url else ""
 
+    # Construct message
     text = (
         f"💼 <b>{job.get('title', '')}</b>\n"
         f"🏢 <b>{job.get('company', '')}</b>\n"
         f"🕒 {posted_at}\n\n"
-        f"{description[:3000]}...\n\n"
-        f"👉 <a href='{apply_url}'>Apply here</a>"
+        f"{description[:3000]}..." + apply_text
     )
+
     return text
 
 
