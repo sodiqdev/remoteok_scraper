@@ -1,0 +1,20 @@
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+venv/
+ENV/
+
+# Django
+*.sqlite3
+db.sqlite3
+
+# Celery
+celerybeat-schedule
+
+# Env vars
+.env
+
+# VS Code
+.vscode/
