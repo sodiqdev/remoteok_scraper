@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from datetime import datetime, timezone
 from typing import Dict
 
@@ -16,6 +17,13 @@ from bs4 import BeautifulSoup
 from telegram_bot_service.config import TELEGRAM_TOKEN
 from telegram_bot_service.services.api_client import search_jobs, get_job_detail
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+)
+logger = logging.getLogger(__name__)
+
+
 bot = Bot(
     token=TELEGRAM_TOKEN,
     default=DefaultBotProperties(parse_mode=ParseMode.HTML)
@@ -30,7 +38,7 @@ def format_job_message(job: Dict) -> str:
         try:
             posted_at_dt = datetime.fromisoformat(posted_at_str.replace("Z", "+00:00"))
             posted_at_dt = posted_at_dt.astimezone(timezone.utc)
-            posted_at = posted_at_dt.strftime("%B %d, %Y")
+            posted_at = posted_at_dt.strftime("%B %d, %Y %H:%M")
         except Exception:
             posted_at = posted_at_str
     else:

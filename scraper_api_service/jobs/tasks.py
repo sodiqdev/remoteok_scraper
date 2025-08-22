@@ -1,6 +1,6 @@
 
 from celery import shared_task
-from .utils import scrape_jobs
+from .utils2 import scrape_jobs
 
 @shared_task
 def scrape_latest_jobs():

@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from jobs.utils import scrape_jobs
+from jobs.utils2 import scrape_jobs
 
 
 class Command(BaseCommand):
