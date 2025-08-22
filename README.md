@@ -69,25 +69,6 @@ python manage.py runserver
 
 ---
 
-## 📦 Project Structure
-
-```
-uzinfocom/
-├─ scraper_api_service/       # Django project
-│  ├─ celery.py               # Celery configuration
-│  ├─ settings.py
-│  ├─ __init__.py
-├─ jobs/                      # Django app
-│  ├─ tasks.py                # Celery tasks
-│  ├─ views.py
-│  ├─ urls.py
-├─ telegram_bot_service/      # Telegram bot code
-├─ requirements.txt
-├─ .gitignore
-├─ .env.example
-```
-
----
 
 ## 🔒 Security
 
